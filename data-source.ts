@@ -6,7 +6,7 @@ import {CreateBusinessTable1658976782300} from "./src/shared/infra/typeorm/migra
 export const AppDataSource = new DataSource({
   type: "mysql",
   port: 3306,
-  host: process.env.ENVIRONMENT,
+  host: process.env.DB_HOST,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB,
