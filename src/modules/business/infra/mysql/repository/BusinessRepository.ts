@@ -1,5 +1,7 @@
+import { ArrayContains, Like, Raw } from "typeorm";
 import { AppDataSource } from "../../../../../../data-source";
 import { AppError } from "../../../../../shared/error/AppError";
+import { ICreateBusinessDTO } from "../../../dtos/IBusinessDTOs";
 import { IBusinessRepository } from "../../../repository/IBusinessRepository";
 import { Business } from "../entity/Business";
 
@@ -10,9 +12,6 @@ export class BusinessRepository implements IBusinessRepository {
   }
 
   async create(data: Business): Promise<void> {
-    if (data! instanceof Business) {
-      throw new AppError("Badly formatted or missing data!", 500);
-    }
     try {
       const business = this.repository.create(Business, data);
       await this.repository.save(business);
@@ -47,21 +46,12 @@ export class BusinessRepository implements IBusinessRepository {
   async findByTradeName(tradeName: string): Promise<Business[] | []> {
     if (!tradeName) return [];
     try {
-      const formattedQuery = tradeName.trim().replace(/ /g, " & ");
-      const business = await this.repository
-        .createQueryBuilder()
-        .select("business")
-        .from(Business, "tradeName")
-        .where(
-          `to_tsvector('simple',tradeName) @@ to_tsquery('simple', :query)`,
-          { query: `${formattedQuery}:*` }
-        )
-        .getMany();
+      const business = await this.repository.find(Business, {
+        where: {
+          tradeName: Like(`%${tradeName}%`),
+        },
+      });
 
-      //   const business = await this.repository.find(Business, {
-      // where: { fantasyName: fantasyName },
-      // select: ["id", "fantasyName", "cnpj"],
-      //   });
       return business;
     } catch (err) {
       throw new AppError(`Error while find data: ${err}`, 500);
@@ -88,7 +78,7 @@ export class BusinessRepository implements IBusinessRepository {
       throw new AppError(`Unable to delete data. Non-existent or invalid id.`);
     }
 
-    if (data! instanceof Business) {
+    if (!(data instanceof Business)) {
       throw new AppError("Badly formatted or missing data!", 500);
     }
 

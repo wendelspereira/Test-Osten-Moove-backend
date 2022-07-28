@@ -11,6 +11,7 @@ export class CreateBusinessTable1658976782300 implements MigrationInterface {
             type: "int",
             isPrimary: true,
             generationStrategy: "increment",
+            isGenerated: true,
           },
           {
             name: "corporateName",
@@ -59,12 +60,12 @@ export class CreateBusinessTable1658976782300 implements MigrationInterface {
           },
           {
             name: "prefixPhoneNumber",
-            type: "varchar",
+            type: "int",
             isNullable: false,
           },
           {
             name: "phoneNumber",
-            type: "varchar",
+            type: "int",
             isNullable: false,
           },
           {

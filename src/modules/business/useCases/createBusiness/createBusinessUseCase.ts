@@ -5,10 +5,34 @@ import { Business } from "../../infra/mysql/entity/Business";
 import { BusinessRepository } from "../../infra/mysql/repository/BusinessRepository";
 
 export class CreateBusinessUseCase {
-  async execute(data: ICreateBusinessDTO) {
+  async execute({
+    corporateName,
+    tradeName,
+    cnpj,
+    publicPlace,
+    streetNumber,
+    complement,
+    district,
+    city,
+    federatedUnit,
+    prefixPhoneNumber,
+    phoneNumber,
+  }: ICreateBusinessDTO) {
     const business = new Business();
     const businessRepository = new BusinessRepository();
-    Object.assign(business, data);
+    Object.assign(business, {
+      corporateName,
+      tradeName,
+      cnpj,
+      publicPlace,
+      streetNumber,
+      complement,
+      district,
+      city,
+      federatedUnit,
+      prefixPhoneNumber,
+      phoneNumber,
+    });
     const businessAlreadyExists =
       await businessRepository.cnpjAlreadyRegistered(business.cnpj);
     if (businessAlreadyExists) {

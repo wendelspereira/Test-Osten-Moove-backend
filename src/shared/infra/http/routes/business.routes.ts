@@ -18,9 +18,9 @@ const deleteBusinessController = new DeleteBusinessController();
 
 businessRoutes.post("/", createBusinessController.handle);
 businessRoutes.get("/list", listBusinessController.handle);
-businessRoutes.patch("/update", updateBusinessController.handle);
+businessRoutes.patch("/", updateBusinessController.handle);
 businessRoutes.get("/", findBusinessByIdController.handle);
 businessRoutes.get("/search", findBusinessByTradeNameController.handle);
-businessRoutes.delete("/delete", deleteBusinessController.handle);
+businessRoutes.delete("/", deleteBusinessController.handle);
 
 export { businessRoutes };

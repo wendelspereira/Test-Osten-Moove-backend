@@ -1,7 +1,7 @@
-import { AppError } from "../../../../shared/error/AppError.js";
+import { AppError } from "../../../../shared/error/AppError";
 import { validateCNPJ } from "../../../../utils/cnpjValidate.js";
-import { Business } from "../../infra/mysql/entity/Business.js";
-import { BusinessRepository } from "../../infra/mysql/repository/BusinessRepository.js";
+import { Business } from "../../infra/mysql/entity/Business";
+import { BusinessRepository } from "../../infra/mysql/repository/BusinessRepository";
 
 export class UpdateBusinessUseCase {
   async execute(data: Business, id: string) {

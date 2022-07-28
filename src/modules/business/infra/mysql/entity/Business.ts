@@ -8,7 +8,7 @@ import {
 @Entity("business")
  export class Business{
   @PrimaryGeneratedColumn('increment')
-  id!: number;
+  id?: number;
 
   @Column()
   corporateName!: string;

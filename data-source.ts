@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { Business } from "./src/modules/business/infra/mysql/entity/Business";
 import "dotenv/config";
+import {CreateBusinessTable1658976782300} from "./src/shared/infra/typeorm/migrations/1658976782300-CreateBusinessTable"
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
     Business,
     "__dirname + '/src/modules/business/infra/mysql/entity/*.{js,ts}'",
   ],
-  migrations: ["./src/shared/infra/typeorm/migrations/*.{js,ts}"],
+  migrations: [CreateBusinessTable1658976782300],
 });
 
 AppDataSource.initialize()
