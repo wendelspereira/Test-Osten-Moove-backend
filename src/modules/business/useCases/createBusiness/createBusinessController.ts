@@ -9,6 +9,7 @@ export class CreateBusinessController {
     if (!data) {
       throw new AppError("Missing data in request", 500);
     }
+    
     const createBusinessUseCase = new CreateBusinessUseCase();
     await createBusinessUseCase.execute(data);
     return response.status(201).json({ msg: "created" });

@@ -3,7 +3,8 @@ import { AppError } from "../../../error/AppError";
 
 export default (err: Error, request: Request, response: Response, next: NextFunction) => {
   if (err instanceof AppError) {
-    response.status(err.statusCode).json({
+    console.log(err)
+    return response.status(err.statusCode).json({
       message: err.message,
     });
   }

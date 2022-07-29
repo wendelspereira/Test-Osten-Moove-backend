@@ -1,7 +1,7 @@
 import { ArrayContains, Like, Raw } from "typeorm";
 import { AppDataSource } from "../../../../../../data-source";
 import { AppError } from "../../../../../shared/error/AppError";
-import { ICreateBusinessDTO } from "../../../dtos/IBusinessDTOs";
+import { ICreateBusinessDTO, IUpdateBusinessDTO } from "../../../dtos/IBusinessDTOs";
 import { IBusinessRepository } from "../../../repository/IBusinessRepository";
 import { Business } from "../entity/Business";
 
@@ -13,8 +13,7 @@ export class BusinessRepository implements IBusinessRepository {
 
   async create(data: ICreateBusinessDTO): Promise<void> {
     try {
-      console.log( data)
-
+      
       const business = this.repository.create(Business, data);
       await this.repository.save(business);
     } catch (err) {
@@ -64,27 +63,26 @@ export class BusinessRepository implements IBusinessRepository {
     if (!cnpj) {
       throw new AppError(`Unable to find data for given CNPJ: ${cnpj}`);
     }
+
     try {
       const business = await this.repository.findOne(Business, {
         where: { cnpj: cnpj },
         select: ["id"],
       });
+
       return Boolean(business);
     } catch (err) {
       throw new AppError(`Error while find data: ${err}`, 500);
     }
   }
 
-  async update(id: number, data: Business): Promise<void> {
+  async update(id: number, data: IUpdateBusinessDTO): Promise<void> {
     
 
     if (!id) {
       throw new AppError(`Unable to delete data. Non-existent or invalid id.`);
     }
 
-    if (!(data instanceof Business)) {
-      throw new AppError("Badly formatted or missing data!", 500);
-    }
     const business = await this.findById(id);
     if (!business) {
       throw new AppError(`Data not found for given id: ${id}`);
