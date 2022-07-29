@@ -1,5 +1,5 @@
-import { Business } from "../../infra/mysql/entity/Business";
-import { BusinessRepository } from "../../infra/mysql/repository/BusinessRepository";
+import { Business } from "../../infra/sqlite/entity/Business";
+import { BusinessRepository } from "../../infra/sqlite/repository/BusinessRepository";
 
 export class ListBusinessUseCase {
   async execute(): Promise<Business[] | []> {

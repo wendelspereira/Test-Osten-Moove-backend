@@ -11,7 +11,6 @@ export class CreateBusinessTable1658976782300 implements MigrationInterface {
             type: "int",
             isPrimary: true,
             generationStrategy: "increment",
-            isGenerated: true,
           },
           {
             name: "corporateName",
