@@ -5,47 +5,22 @@ import { Business } from "../../infra/mysql/entity/Business";
 import { BusinessRepository } from "../../infra/mysql/repository/BusinessRepository";
 
 export class CreateBusinessUseCase {
-  async execute({
-    corporateName,
-    tradeName,
-    cnpj,
-    publicPlace,
-    streetNumber,
-    complement,
-    district,
-    city,
-    federatedUnit,
-    prefixPhoneNumber,
-    phoneNumber,
-  }: ICreateBusinessDTO) {
-    const business = new Business();
+  async execute(data: ICreateBusinessDTO) {
     const businessRepository = new BusinessRepository();
-    Object.assign(business, {
-      corporateName,
-      tradeName,
-      cnpj,
-      publicPlace,
-      streetNumber,
-      complement,
-      district,
-      city,
-      federatedUnit,
-      prefixPhoneNumber,
-      phoneNumber,
-    });
+
     const businessAlreadyExists =
-      await businessRepository.cnpjAlreadyRegistered(business.cnpj);
+      await businessRepository.cnpjAlreadyRegistered(data.cnpj);
     if (businessAlreadyExists) {
       throw new AppError(
         "There is already a registration for the informed CNPJ!",
         400
       );
     }
-    const isValidCnpj = validateCNPJ(business.cnpj);
+    const isValidCnpj = validateCNPJ(data.cnpj);
 
     if (!isValidCnpj) {
       throw new AppError("Invalid CNPJ!", 450);
     }
-    await businessRepository.create(business);
+    await businessRepository.create(data);
   }
 }

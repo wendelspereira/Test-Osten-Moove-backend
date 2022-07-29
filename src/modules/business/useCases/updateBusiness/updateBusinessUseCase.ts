@@ -5,6 +5,8 @@ import { BusinessRepository } from "../../infra/mysql/repository/BusinessReposit
 
 export class UpdateBusinessUseCase {
   async execute(data: Business, id: string) {
+    console.log(data, id)
+
     const numberId = parseInt(id)
     const businessRepository = new BusinessRepository();
     const business = new Business();

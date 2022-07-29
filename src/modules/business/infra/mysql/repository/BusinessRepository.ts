@@ -11,8 +11,10 @@ export class BusinessRepository implements IBusinessRepository {
     this.repository = AppDataSource.manager;
   }
 
-  async create(data: Business): Promise<void> {
+  async create(data: ICreateBusinessDTO): Promise<void> {
     try {
+      console.log( data)
+
       const business = this.repository.create(Business, data);
       await this.repository.save(business);
     } catch (err) {
@@ -74,6 +76,8 @@ export class BusinessRepository implements IBusinessRepository {
   }
 
   async update(id: number, data: Business): Promise<void> {
+    
+
     if (!id) {
       throw new AppError(`Unable to delete data. Non-existent or invalid id.`);
     }
@@ -81,7 +85,6 @@ export class BusinessRepository implements IBusinessRepository {
     if (!(data instanceof Business)) {
       throw new AppError("Badly formatted or missing data!", 500);
     }
-
     const business = await this.findById(id);
     if (!business) {
       throw new AppError(`Data not found for given id: ${id}`);
