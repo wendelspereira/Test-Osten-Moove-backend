@@ -11,7 +11,7 @@ Para executar esta aplicação em ambiente de desenvolvimento não será necess�
 ```bash
 ENVIRONMENT="production"
 DATABASE_URL=#Insira aqui a URI de um banco Postgres
-PORT=#3333 ou a porta de sua preferência
+PORT=3334
 ```
 
 Na pasta  ./database se encontra o banco de dados em arquivo, carregado com a estrutura definida pelos arquivos de migrations além alguns registros de exemplo. Caso deseje recriar o banco, execute o script a seguir.
